@@ -24,7 +24,7 @@ services:
     image: "mongo:latest"
     restart: always
     ports:
-      - "27017:27017"
+      - "27018:27017"
   postgres:
     build: ./postgres
     restart: always
@@ -32,7 +32,7 @@ services:
       - ./db:/var/lib/postgresql
 
     ports:
-      - "5432:5432"
+      - "5435:5432"
     environment:
       POSTGRES_DB: test
       POSTGRES_USER: test

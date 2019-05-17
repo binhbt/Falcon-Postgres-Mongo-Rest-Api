@@ -1,0 +1,39 @@
+version: '3'
+#networks:
+#  default:
+#    external:
+#      name: mayfly-net
+                
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: dev-dockerfile
+    container_name: api_app
+    command: gunicorn -b 0.0.0.0:5000 --reload app.main:application
+
+    environment:
+      - MF_MONGO_URI=mongodb://db_mongo/appdb
+      - MF_DB_NAME=appdb
+    depends_on:
+      - mongo-db
+    ports:
+     - "5000:5000"
+  mongo-db:
+    container_name: db_mongo
+    image: "mongo:latest"
+    restart: always
+    ports:
+      - "27017:27017"
+  postgres:
+    build: ./postgres
+    restart: always
+    volumes:
+      - ./db:/var/lib/postgresql
+
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: test
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test

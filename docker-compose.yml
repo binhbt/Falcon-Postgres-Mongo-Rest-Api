@@ -17,6 +17,7 @@ services:
       - MF_DB_NAME=appdb
     depends_on:
       - mongo-db
+      - postgres
     ports:
      - "5000:5000"
   mongo-db:
